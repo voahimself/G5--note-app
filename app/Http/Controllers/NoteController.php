@@ -38,19 +38,17 @@ class NoteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Note $note)
     {
-        $note = Note::findOrFail($id);
-        return view('note.show', ['note' => $note]);
+        return view('note.show');
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Note $note)
     {
-        return view('note.edit', ['notes' => $note]);
+        return view('note.edit');
     }
 
     /**
