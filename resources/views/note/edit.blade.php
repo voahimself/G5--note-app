@@ -1,13 +1,15 @@
 <x-layout>
     <div>
         <div class="note-container single-note">
-            <h1 class="text-3xl py-4">Edit your note</h1>
-            <form action="" method="POST" class="note">
+            <h1 class="py-4 text-3xl">Edit your note</h1>
+            <form action="{{ route('note.update', $note) }}" method="POST" class="note">
+                @csrf
+                @method('PUT')
                 <textarea name="note" rows="10" class="note-body" placeholder="Enter your note here">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, sunt.
+                    {{ $note->note}}
                 </textarea>
                 <div class="note-buttons">
-                    <a href="#" class="note-cancel-button">Cancel</a>
+                    <a href="{{ route('note.index') }}" class="note-cancel-button">Cancel</a>
                     <button class="note-submit-button">Submit</button>
                 </div>
             </form>

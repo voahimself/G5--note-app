@@ -32,38 +32,58 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'note' => ['required', 'string']
+        ]);
+
+        $data['user_id'] = 1;
+
+        $note = Note::create($data);
+
+        return to_route('note.show', $note)->with('message', 'note was created');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Note $note)
+    public function show($id)
     {
-        return view('note.show');
+        $note = Note::findOrFail($id);
+
+        return view('note.show',  ['note' => $note]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Note $note)
+    public function edit($id)
     {
-        return view('note.edit');
+        $note = Note::findOrFail($id);
+        return view('note.edit',  ['note' => $note]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Note $note)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'note' => ['required', 'string']
+        ]);
+
+        $note = Note::findOrFail($id); 
+        $note->update($data);
+
+        return to_route('note.show', $note)->with('message', 'note was updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Note $note)
+    public function destroy($id)
     {
-        //
+        $note = Note::findOrFail($id); 
+        $note->delete();
+        return to_route('note.index')->with('message', 'note was deleted');
     }
 }
